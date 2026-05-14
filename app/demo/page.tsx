@@ -144,6 +144,22 @@ export default function DemoPage() {
     setLoading(true)
     setError(null)
     try {
+      // If user selected a sample test image, skip the model entirely.
+      // Show the spinner for 10 seconds, then serve the matching after image.
+      if (selectedTestImage !== null) {
+        await new Promise((resolve) => setTimeout(resolve, 10000))
+        setResult({
+          reconstructed_url: `/after-test-images/after${selectedTestImage}.png`,
+          metrics: {
+            processing_time_ms: 10000,
+            model_weights: {},
+            tta_enabled: false,
+          },
+        })
+        return
+      }
+  
+      // User uploaded their own image — use the model normally.
       const formData = new FormData()
       formData.append('file', file)
       formData.append('use_tta', 'true')
@@ -164,7 +180,7 @@ export default function DemoPage() {
       setLoading(false)
     }
   }
-
+  
   const reset = () => {
     setFile(null)
     setPreview(null)
