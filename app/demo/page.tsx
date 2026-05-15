@@ -147,7 +147,7 @@ export default function DemoPage() {
       // If user selected a sample test image, skip the model entirely.
       // Show the spinner for 10 seconds, then serve the matching after image.
       if (selectedTestImage !== null) {
-        await new Promise((resolve) => setTimeout(resolve, 10000))
+        await new Promise((resolve) => setTimeout(resolve, 3000))
         setResult({
           reconstructed_url: `/after-test-images/after${selectedTestImage}.png`,
           metrics: {
